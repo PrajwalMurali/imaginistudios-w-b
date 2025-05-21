@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>IMAGINIS STUDIOS 🎥✨</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
+
+    @font-face {
+      font-family: 'Tagesschrift';
+      src: url('./fonts/Tagesschrift.woff2') format('woff2'),
+           url('./fonts/Tagesschrift.woff') format('woff'),
+           url('./fonts/Tagesschrift.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+      position: absolute;
+      top: 28%;
+      left: 8%;
+      right: 30%;
+      transform: translate(-50%, -50%);
+    }
+
+    .circular-logo {
+      width: 250px;
+      height: 250px;
+      border-radius:50%;
+      overflow: hidden;
+      border: 3px solid #000000;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .circular-logo:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .circular-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    /* Update responsive sizes */
+    @media (max-width: 500px) {
+      .circular-logo {
+        width: 200px;
+        height: 200px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .circular-logo {
+        width: 150px;
+        height: 150px;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #111;
+      color: #eee;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(17, 17, 17, 0.95);
+      backdrop-filter: saturate(180%) blur(10px);
+      z-index: 999;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+
+    nav {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+    }
+
+    .nav-logo {
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #f3f3f3;
+      user-select: none;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 1.25rem;
+      list-style: none;
+    }
+
+    nav ul li a {
+      color: #eee;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      user-select: none;
+    }
+
+    nav ul li a:hover,
+    nav ul li a:focus {
+      background-color: #f3f3f3;
+      color: #111;
+      outline: none;
+    }
+
+    main {
+      max-width: 100vw;
+      margin: 0 0 60px 0;
+      padding: 0;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 0;
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+      height: 100vh;
+      min-height: 100vh;
+      width: 100vw;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      letter-spacing: 3px;
+      font-family: 'Oswald', 'Poppins', sans-serif;
+      background: linear-gradient(90deg, #ffffff 90%, #ffffff 90%, #ffffff 90%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      position: absolute;
+      left: 0%;
+      right: 0%;
+      top: 10%;
+      bottom: 0%;
+    }
+
+    .hero p {
+      font-weight: 300;
+      font-size: 1.25rem;
+      color: #ffffff;
+      max-width: 480px;
+      margin: 0 auto;
+      position: absolute;
+      top: 11%;
+    }
+
+    .hero-bg-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      opacity: 1;
+      filter: blur(1.0px) brightness(0.9);
+      pointer-events: none;
+      flex-shrink: 0;
+      z-index: 0;
+      inset: 0;
+    }
+
+    .hero > *:not(.hero-bg-video) {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-attribution a {
+      color: #000000;
+      text-decoration: none;
+      opacity: 0.10;
+    }
+
+    .hero-attribution a:hover {
+      text-decoration: underline;
+      opacity: 1;
+    }
+
+    section.about-me {
+      background: #1a1a1a;
+      padding: 2.5rem 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #222;
+      margin-bottom: 3rem;
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+    }
+
+    section.about-me h2 {
+      font-weight: 600;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #fafafa;
+      text-align: center;
+      letter-spacing: 1.5px;
+    }
+
+    section.about-me p {
+      max-width: 700px;
+      margin: 0 auto;
+      font-weight: 300;
+      font-size: 1.1rem;
+      color: #ccc;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    section.services {
+      margin-bottom: 3rem;
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+    }
+    section.services h2 {
+      font-weight: 600;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: #fafafa;
+      letter-spacing: 1.5px;
+      text-align: center;
+    }
+
+    .service-carousel {
+      display: flex;
+      gap: 2.5rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 24px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: #ffffff transparent;
+      justify-content: flex-start;
+      width: 100vw;
+      padding-left: 2vw;
+      padding-right: 2vw;
+    }
+    .service-carousel::-webkit-scrollbar {
+      height: 10px;
+    }
+    .service-carousel::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .service-carousel::-webkit-scrollbar-thumb {
+      background-color: #ffffff;
+      border-radius: 6px;
+    }
+
+    .service-card {
+      background: #222;
+      border-radius: 18px;
+      padding: 1.2rem 1rem 1.5rem 1rem;
+      box-shadow: 0 6px 24px rgb(100 255 218 / 0.25);
+      color: #e0f7f1;
+      flex: 0 0 340px;
+      scroll-snap-align: start;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+      min-height: 370px;
+    }
+    .service-card:hover,
+    .service-card:focus-within {
+      transform: translateY(-14px) scale(1.03);
+      box-shadow: 0 16px 40px rgb(255, 255, 255);
+      outline: none;
+    }
+
+    .service-card img,
+    .service-card video {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-bottom: 1.1rem;
+      user-select: none;
+      box-shadow: 0 2px 12px rgb(100 255 218 / 0.15);
+      background: #111;
+    }
+
+    .service-card h3 {
+      font-weight: 700;
+      font-size: 1.35rem;
+      color: #ffffff;
+      text-align: center;
+      letter-spacing: 1px;
+      user-select: none;
+      margin-top: auto;
+    }
+
+    .service-card .view-more-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(17, 17, 17, 0.65);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: opacity 0.3s ease;
+      z-index: 2;
+      pointer-events: none;
+      border-radius: 18px;
+      text-shadow: 0 2px 8px #111;
+    }
+
+    .service-card:hover .view-more-overlay,
+    .service-card:focus-within .view-more-overlay {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    section.gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 32px;
+      margin: 2.5rem 0 2.5rem 0;
+      width: 100vw;
+      padding: 0 2vw;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      cursor: pointer;
+      transform: translateY(20px);
+      opacity: 0;
+      animation: fadeInUp 0.6s ease forwards;
+      min-height: 300px;
+      box-shadow: 0 4px 15px rgba(100, 255, 218, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(100, 255, 218, 0.4);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      border-radius: 12px;
+    }
+
+    .gallery-item:hover img,
+    .gallery-item:focus-within img {
+      transform: scale(1.05);
+      filter: brightness(1.1);
+    }
+
+    .gallery-item .caption {
+      position: absolute;
+      bottom: 0;
+      background: rgba(17,17,17,0.8);
+      width: 100%;
+      padding: 1rem 1.5rem;
+      color: #f3f3f3;
+      font-weight: 500;
+      font-size: 1.1rem;
+      opacity: 0;
+      transform: translateY(100%);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      border-radius: 0 0 12px 12px;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .gallery-item:hover .caption,
+    .gallery-item:focus-within .caption {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .gallery-item .view-more-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(17, 17, 17, 0.65);
+      color: #000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: opacity 0.3s ease;
+      z-index: 2;
+      pointer-events: none;
+      border-radius: 12px;
+      text-shadow: 0 2px 8px #111;
+    }
+
+    .gallery-item:hover .view-more-overlay,
+    .gallery-item:focus-within .view-more-overlay {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    section.contact {
+      margin-top: 4rem;
+      background: #222;
+      padding: 2rem 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgb(255 255 255 / 0.1);
+    }
+
+    section.contact h2 {
+      font-weight: 600;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      color: #fafafa;
+    }
+
+    form {
+      max-width: 480px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    input, textarea {
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      border: none;
+      font-size: 1rem;
+      font-family: inherit;
+      resize: none;
+    }
+
+    input:focus, textarea:focus {
+      outline: 2px solid #64ffda;
+      background: #111;
+      color: #fafafa;
+    }
+
+    button {
+      background: #64ffda;
+      color: #111;
+      padding: 0.85rem 1rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 1.2px;
+      transition: background-color 0.3s ease;
+      user-select:none;
+    }
+
+    button:hover, button:focus {
+      background: #52e0bc;
+      outline:none;
+    }
+
+    footer {
+      text-align: center;
+      margin: 3rem auto 2rem;
+      color: #666;
+      font-size: 0.9rem;
+      user-select:none;
+    }
+
+    /* Modal Styles */
+
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 1500;
+      overflow-y: auto;
+      animation: fadeIn 0.3s ease forwards;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #222;
+      border-radius: 18px;
+      max-width: 1400px;
+      width: 99vw;
+      max-height: 96vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 32px rgb(100 255 218 / 0.7);
+      position: relative;
+      animation: slideInUp 0.3s ease forwards;
+      user-select: none;
+      padding: 0;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #444;
+      color: #64ffda;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .modal-header h3 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      user-select:none;
+      margin: 0;
+      flex: 1 1 auto;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 10;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      color: #64ffda;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      user-select:none;
+      outline:none;
+      padding: 0;
+      width: 36px;
+      height: 36px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-left: 1rem;
+    }
+    .close-modal:hover,
+    .close-modal:focus {
+      color: #a1f7e7;
+    }
+
+    .modal-gallery {
+      padding: 2.5rem 2vw 2.5rem 2vw;
+      overflow-x: auto;
+      display: flex;
+      gap: 3rem;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      justify-content: center;
+    }
+    .modal-gallery img {
+      flex: 0 0 480px;
+      height: 340px;
+      max-width: 98vw;
+      object-fit: cover;
+      border-radius: 16px;
+      cursor: pointer;
+      scroll-snap-align: start;
+      box-shadow: 0 6px 24px rgb(100 255 218 / 0.4);
+      transition: transform 0.3s ease;
+      user-select: none;
+      background: #111;
+    }
+    .modal-gallery img:hover,
+    .modal-gallery img:focus {
+      transform: scale(1.12);
+      outline: none;
+      box-shadow: 0 12px 36px rgb(100 255 218 / 0.8);
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Scroll smooth */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 1024px) {
+      main {
+        max-width: 100vw;
+      }
+      .service-carousel {
+        gap: 1.2rem;
+      }
+      .service-card {
+        flex: 0 0 270px;
+        min-height: 300px;
+      }
+      .service-card img,
+      .service-card video {
+        height: 160px;
+      }
+      .modal-content {
+        max-width: 100vw;
+      }
+      section.gallery {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 18px;
+        padding: 0 1vw;
+      }
+      .modal-gallery {
+        padding: 1.2rem 1vw 1.2rem 1vw;
+        gap: 1.5rem;
+      }
+      .modal-gallery img {
+        flex: 0 0 320px;
+        height: 200px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .service-card {
+        flex: 0 0 200px;
+        min-height: 220px;
+      }
+      .service-card img,
+      .service-card video {
+        height: 110px;
+      }
+      section.gallery {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 10px;
+        padding: 0 0.5vw;
+      }
+    }
+
+    @media (max-width: 480px) {
+      section.gallery {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 0;
+      }
+      .gallery-item {
+        min-height: 180px;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .service-card {
+        flex: 0 0 200px;
+        min-height: 220px;
+      }
+      .service-card img,
+      .service-card video {
+        height: 110px;
+      }
+      .modal-gallery img {
+        flex: 0 0 140px;
+        height: 100px;
+      }
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      section.about-me,
+      section.contact {
+        padding: 2rem 1rem;
+      }
+      .gallery-item {
+        min-height: 200px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0.8rem;
+      }
+      nav ul {
+        width: 100%;
+        justify-content: center;
+        gap: 0.8rem;
+      }
+      main {
+        margin: 120px auto 40px;
+      }
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      section.gallery {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 10px;
+      }
+      .service-card {
+        flex: 0 0 160px;
+      }
+      .service-card img,
+      .service-card video {
+        height: 120px;
+      }
+      .service-card h3 {
+        font-size: 1rem;
+      }
+      form {
+        padding: 0 0.5rem;
+      }
+      .modal-content {
+        max-width: 100vw;
+        width: 100vw;
+        border-radius: 8px;
+        margin: 0;
+        left: 0;
+        right: 0;
+      }
+      .modal-gallery {
+        padding: 0.5rem 0 0.5rem 0;
+        gap: 1rem;
+        max-height: 60vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-y: auto;
+        overflow-x: hidden;
+        width: 100%;
+      }
+      .modal-gallery img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+        border-radius: 8px;
+        object-fit: cover;
+      }
+    }
+
+    @media (max-width: 450px) {
+      nav ul li a {
+        font-size: 0.85rem;
+        padding: 0.2rem 0.4rem;
+      }
+      .hero h1 {
+        font-size: 1.6rem;
+      }
+      .hero p {
+        font-size: 0.9rem;
+      }
+      section h2 {
+        font-size: 1.6rem !important;
+      }
+      .service-card {
+        flex: 0 0 140px;
+      }
+      .service-card img,
+      .service-card video {
+        height: 100px;
+      }
+      .modal-gallery {
+        padding: 0.8rem;
+        gap: 0.8rem;
+      }
+      .modal-gallery img {
+        flex: 0 0 120px;
+        height: 90px;
+      }
+      .modal-header h3 {
+        font-size: 1.3rem;
+      }
+    }
+    @media (max-width: 450px) {
+      nav ul {
+        gap: 0.6rem;
+      }
+      nav ul li a {
+        font-size: 0.9rem;
+      }
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      main {
+        margin: 100px 1rem 60px;
+        padding: 0 0.8rem;
+      }
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .social-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #ffffff;
+      text-decoration: none;
+      transition: transform 0.3s ease, color 0.3s ease;
+      gap: 0.5rem;
+    }
+
+    .social-link i {
+      font-size: 2rem;
+    }
+
+    .social-link span {
+      font-size: 0.9rem;
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px);
+      color: #ffffff;
+    }
+
+    @media (max-width: 600px) {
+      .social-links {
+        gap: 1.5rem;
+      }
+      .social-link i {
+        font-size: 1.75rem;
+      }
+    }
+
+    .team-section {
+      margin-top: 2.5rem;
+    }
+    .team-grid {
+      display: flex;
+      gap: 2.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+    .team-member {
+      position: relative;
+      overflow: hidden;
+    
+      border-radius: 14px;
+      box-shadow: 0 2px 12px rgb(32, 32, 32);
+      padding: 1.2rem 1.2rem 1.5rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 240px;
+      min-width: 180px;
+      max-width: 100%;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .team-member:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 32px rgb(255, 255, 255);
+    }
+    .team-bg-video {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      opacity: 100;
+      filter: blur(0px) brightness(0.9);
+      pointer-events: none;
+    }
+    .team-member > *:not(.team-bg-video) {
+      position: relative;
+      z-index: 2;
+    }
+    .team-photo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      border: 3px solid #ffffff;
+      box-shadow: 0 0 12px rgb(255, 255, 255);
+    }
+    .team-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .team-info h4 {
+      margin: 0.2rem 0 0.1rem 0;
+      color: #fafafa;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .team-role {
+      color: #ffffff;
+      font-size: 0.98rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .team-info p {
+      color: #ffffff;
+      font-size: 0.98rem;
+      margin-top: 0.3rem;
+    }
+    @media (max-width: 700px) {
+      .team-grid {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      .team-member {
+        width: 90%;
+        min-width: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="nav-logo" tabindex="0">IMAGINIS STUDIOS 🎥✨</div>
+      <ul>
+        <li><a href="#about" tabindex="0">About Us</a></li>
+        <li><a href="#services" tabindex="0">Our Services</a></li>
+        <li><a href="#gallery" tabindex="0">Gallery</a></li>
+        <li><a href="#contact" tabindex="0">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Introduction" style="position:relative; overflow:hidden;">
+      <video class="hero-bg-video" autoplay loop muted playsinline poster="#111" aria-hidden="true">
+        <source src="./hero.1.mp4" type="video/mp4" />
+      </video>
+      <div class="logo-container">
+        <div class="circular-logo">
+          <!-- Add your logo image here -->
+          <img src="./logo.png" alt="Portfolio Logo" />
+        </div>
+      </div>
+      <h1>IMAGINIS STUDIOS🎥✨</h1>
+      <p>Explore Our photography portfolio showcasing moments, landscapes, and people through a lens.</p>
+      <div class="hero-attribution" style="position:absolute;bottom:8px;right:15px;font-size:0.9rem;color:#ffffff;z-index:3;opacity:10;">
+      </div>
+    </section>
+
+    <section id="about" class="about-me" aria-label="About me section">
+      <h2>About Us</h2>
+      <p>Hello! We are passionate photographers and videographers dedicated to capturing the beauty and emotion of every moment. With years of experience, We blend technical skill and creativity to tell stories through Our lens across various genres. Our goal is to create timeless visuals that truly connect with viewers.</p>
+      
+      <div class="team-section">
+        <h3 style="margin-top:2rem; text-align:center; color:#ffffff; font-size:1.5rem;">Meet the Team</h3>
+        <div class="team-grid">
+          <div class="team-member" style="position:relative; overflow:hidden;">
+            <video class="team-bg-video" autoplay loop muted playsinline poster="#111" aria-hidden="true">
+              <source src="./krishna bg.mp4" type="video/mp4" />
+            </video>
+            <div class="team-photo">
+              <img src="./krishna bro.png" alt="krishna bro - Lead Photographer" />
+            </div>
+            <div class="team-info">
+              <h4>KRISHNA VARDHAN</h4>
+              <span class="team-role">Lead Photographer & Videographer</span>
+              <p>Krishna specializes in portrait and event photography, capturing authentic moments with creativity and technical skill.</p>
+            </div>
+          </div>
+          <div class="team-member" style="position:relative; overflow:hidden;">
+            <video class="team-bg-video" autoplay loop muted playsinline poster="#111" aria-hidden="true">
+              <source src="./pranav bg.mp4" type="video/mp4" />
+            </video>
+            <div class="team-photo">
+              <img src="https://randomuser" alt="pranav - Videographer" />
+            </div>
+            <div class="team-info">
+              <h4>PRANAV NARAYANA</h4>
+              <span class="team-role">Lead Videographer and Editor</span>
+              <p>Pranav brings stories to life through cinematic videography, specializing in documentaries ,commercial videos and creative editing.</p>
+            </div>
+          </div>
+          <div class="team-member" style="position:relative; overflow:hidden;">
+            <video class="team-bg-video" autoplay loop muted playsinline poster="#111" aria-hidden="true">
+              <source src="./prajwal bg.mp4" type="video/mp4" />
+            </video>
+            <div class="team-photo">
+              <img src="./prajwal.png" alt="prajwal murali - Editor" />
+            </div>
+            <div class="team-info">
+              <h4>PRAJWAL MURALI</h4>
+              <span class="team-role">Social media manager</span>
+              <p>Prajwalensures every photo and video is polished to perfection, handling post-production and web development.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="services" aria-label="Services provided">
+      <h2>Photography Services</h2>
+      <div class="service-carousel" aria-label="Photography services image carousel">
+        <div class="service-card" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Portrait Photography" data-service="portrait">
+          <img src="./photography services/portrait photography/1model1.jpg" alt="Portrait of a woman" loading="lazy" />
+          <div class="view-more-overlay">View More</div>
+          <h3>Portrait Photography</h3>
+        </div>
+        <div class="service-card" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Event Photography" data-service="eventphoto">
+          <img src="./photography services/necklace 2.jpg" alt="Wedding ceremony photo" loading="lazy" />
+          <div class="view-more-overlay">View More</div>
+          <h3>Jewellery Photography</h3>
+        </div>
+        <div class="service-card" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Commercial Photography" data-service="commercialphoto">
+          <img src="./photography services/sprite 5.jpg" alt="Product photography" loading="lazy" />
+          <div class="view-more-overlay">View More</div>
+          <h3>Product Photography</h3>
+        </div>
+        <div class="service-card" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Fashion Photography" data-service="fashionphoto">
+          <img src="./photography services/model wm 4.jpg" alt="Fashion shoot" loading="lazy" />
+          <div class="view-more-overlay">View More</div>
+          <h3>Fashion Photography</h3>
+        </div>
+      </div>
+
+      <h2 style="margin-top: 3rem;">Videography Services</h2>
+      <div class="service-carousel" aria-label="Videography services video carousel">
+        <div class="service-card" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Event Filming" data-service="eventvideo">
+          <video width="100%" height="150" autoplay muted loop playsinline> 
+
+          </video>
+          <div class="view-more-overlay">View More</div>
+          <h3>Event Filming</h3>
+        </div>
+        <div class="service-card" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Documentary Videos" data-service="documentaryvideo">
+          <video width="100%" height="150" autoplay muted loop playsinline>
+            <source src="" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="view-more-overlay">View More</div>
+          <h3>Documentary Videos</h3>
+        </div>
+        <div class="service-card" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Commercial Advertisements" data-service="commercialvideo">
+          <video width="100%" height="150" autoplay muted loop playsinline>
+            <source src="./final cut.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="view-more-overlay">View More</div>
+          <h3>Commercial Advertisements</h3>
+        </div>
+        <div class="service-card" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Drone Videography" data-service="dronevideo">
+          <video width="100%" height="150" autoplay muted loop playsinline>
+            <source src="" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="view-more-overlay">View More</div>
+          <h3>Drone Videography</h3>
+        </div>
+        <div class="service-card" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Highlight Videos" data-service="highlightvideo">
+          <video width="100%" height="150" autoplay muted loop playsinline>
+            <source src="https://player.vimeo.com/external/384761655.sd.mp4?s=383ab4dbc773cd0d6c1a0073af0896ac721f8b33&profile_id=165&oauth2_token_id=57447761" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="view-more-overlay">View More</div>
+          <h3>Highlight Videos</h3>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="gallery" aria-label="Photography gallery">
+      <article class="gallery-item" tabindex="0">
+        <img src="https://images.pexels.com/photos/414171/pexels-photo-414171.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=350" alt="Mountain landscape with sun rays" loading="lazy" />
+        <div class="caption">Sunlight over Mountains</div>
+      </article>
+      <article class="gallery-item" tabindex="0">
+        <img src="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=350" alt="City street at night with neon lights" loading="lazy" />
+        <div class="caption">Vibrant City Lights</div>
+      </article>
+      <article class="gallery-item" tabindex="0">
+        <img src="https://images.pexels.com/photos/247599/pexels-photo-247599.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=350" alt="Close up portrait of a woman" loading="lazy" />
+        <div class="caption">Portrait Expression</div>
+      </article>
+      <article class="gallery-item" tabindex="0">
+        <img src="https://images.pexels.com/photos/33109/fall-autumn-red-season.jpg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=350" alt="Autumn leaves on a red tree" loading="lazy" />
+        <div class="caption">Autumn Colors</div>
+      </article>
+      <article class="gallery-item" tabindex="0">
+        <img src="https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=350" alt="Silhouette of a person jumping with sunset" loading="lazy" />
+        <div class="caption">Sunset Silhouette</div>
+      </article>
+      <article class="gallery-item" tabindex="0">
+        <img src="https://images.pexels.com/photos/2088172/pexels-photo-2088172.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=350" alt="Waves crashing on the shore" loading="lazy" />
+        <div class="caption">Ocean Waves</div>
+      </article>
+    </section>
+
+    <section id="contact" class="contact" aria-label="Contact section">
+      <h2>Contact Us</h2>
+      <div class="social-links">
+        <a href="https://instagram.com/your-handle" target="_blank" rel="noopener noreferrer" class="social-link">
+          <i class="fab fa-instagram"></i>
+          <span>Instagram</span>
+        </a>
+        <a href="https://facebook.com/your-page" target="_blank" rel="noopener noreferrer" class="social-link">
+          <i class="fab fa-facebook"></i>
+          <span>Facebook</span>
+        </a>
+        <a href="https://linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer" class="social-link">
+          <i class="fab fa-linkedin"></i>
+          <span>LinkedIn</span>
+        </a>
+        <a href="mailto:your.email@example.com" class="social-link">
+          <i class="fas fa-envelope"></i>
+          <span>Email</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <small>© IMAGINIS STUDIOS 🎥</small>
+  </footer>
+
+  <!-- Modal for service details -->
+  <div id="serviceModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc" tabindex="-1">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h3 id="modalTitle">Service Title</h3>
+        <button class="close-modal" aria-label="Close modal">&times;</button>
+      </header>
+      <div class="modal-gallery" id="modalGallery" aria-label="Service gallery">
+        <!-- Images inserted here dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const servicesData = {
+      portrait: {
+        title: "Portrait Photography",
+        images: [
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/812971/pexels-photo-812971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
+        ]
+      },
+      eventphoto: {
+        title: "Jewellery Photography",
+        images: [
+          "https://images.pexels.com/photos/196667/pexels-photo-196667.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/21014/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/345119/pexels-photo-345119.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/755009/pexels-photo-755009.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
+        ]
+      },
+      landscapephoto: {
+        title: "Landscape Photography",
+        images: [
+          "https://images.pexels.com/photos/753626/pexels-photo-753626.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/414171/pexels-photo-414171.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/1205303/pexels-photo-1205303.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/132037/pexels-photo-132037.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/417173/pexels-photo-417173.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
+        ]
+      },
+      commercialphoto: {
+        title: "product Photography",
+        images: [
+          "./photography services/sprite 5.jpg",
+          "https://images.pexels.com/photos/373678/pexels-photo-373678.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/1092671/pexels-photo-1092671.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/97059/pexels-photo-97059.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/1022929/pexels-photo-1022929.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
+        ]
+      },
+      fashionphoto: {
+        title: "Fashion Photography",
+        images: [
+          "https://images.pexels.com/photos/1081686/pexels-photo-1081686.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/632192/pexels-photo-632192.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/1031239/pexels-photo-1031239.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/374885/pexels-photo-374885.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/459654/pexels-photo-459654.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
+        ]
+      },
+      eventvideo: {
+        title: "Event Filming",
+        images: [
+          "https://images.pexels.com/photos/60597/pexels-photo-60597.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/528052/pexels-photo-528052.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/965421/pexels-photo-965421.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/260689/pexels-photo-260689.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/267431/pexels-photo-267431.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
+        ]
+      },
+      documentaryvideo: {
+        title: "Documentary Videos",
+        images: [
+          "https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/3952238/pexels-photo-3952238.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/1449797/pexels-photo-1449797.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/3561136/pexels-photo-3561136.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/266211/pexels-photo-266211.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
+        ]
+      },
+      commercialvideo: {
+        title: "Commercial Advertisements",
+        images: [
+          "https://images.pexels.com/photos/1591060/pexels-photo-1591060.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/1926397/pexels-photo-1926397.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/1541179/pexels-photo-1541179.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/3671357/pexels-photo-3671357.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/57690/videographer-person-video-camera-57690.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
+        ]
+      },
+      dronevideo: {
+        title: "Drone Videography",
+        images: [
+          "https://images.pexels.com/photos/356004/pexels-photo-356004.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/518244/pexels-photo-518244.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/135887/pexels-photo-135887.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/459111/pexels-photo-459111.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
+        ]
+      },
+      highlightvideo: {
+        title: "Highlight Videos",
+        images: [
+          "https://images.pexels.com/photos/7131499/pexels-photo-7131499.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/1489201/pexels-photo-1489201.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/3860247/pexels-photo-3860247.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/5369042/pexels-photo-5369042.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+          "https://images.pexels.com/photos/5468192/pexels-photo-5468192.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
+        ]
+      }
+    };
+
+    const serviceCards = document.querySelectorAll('.service-card');
+    const modal = document.getElementById('serviceModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalGallery = document.getElementById('modalGallery');
+    const closeModalBtn = modal.querySelector('.close-modal');
+
+    // Open modal and populate images
+    function openModal(serviceKey) {
+      const data = servicesData[serviceKey];
+      if (!data) return;
+
+      modalTitle.textContent = data.title;
+      modalGallery.innerHTML = '';
+      data.images.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = data.title + ' sample photo';
+        img.loading = 'lazy';
+        modalGallery.appendChild(img);
+      });
+
+      modal.classList.add('active');
+      document.body.classList.add('modal-open');
+      modal.focus();
+    }
+
+    // Close modal
+    function closeModal() {
+      modal.classList.remove('active');
+      document.body.classList.remove('modal-open');
+    }
+
+    // Click handlers for service cards
+    serviceCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const service = card.getAttribute('data-service');
+        openModal(service);
+      });
+      card.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const service = card.getAttribute('data-service');
+          openModal(service);
+        }
+      });
+    });
+
+    // Close modal on close button click
+    closeModalBtn.addEventListener('click', closeModal);
+
+    // Close modal on clicking outside modal content
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    // Focus trap inside modal
+    modal.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab') {
+        const focusable = modal.querySelectorAll('button, [tabindex]:not([tabindex="-1"])');
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        } else if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      }
+    });
+
+    // Form submission with simple validation and feedback
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const message = form.message.value.trim();
+
+      if (!name || !email || !message) {
+        alert('Please fill out all fields before sending.');
+        return;
+      }
+
+      // Simple email format validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address.');
+        form.email.focus();
+        return;
+      }
+
+      // Simulate form submission success
+      alert('Thank you for reaching out, ' + name + '! I will get back to you soon.');
+      form.reset();
+    });
+
+  </script>
+</body>
+</html>
+
